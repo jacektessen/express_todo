@@ -1,17 +1,16 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const path = require("path");
+const dotenv = require("dotenv");
+const usersRouter = require("./routes/api/users");
+const tasksRouter = require("./routes/api/tasks");
+const settingsRouter = require("./routes/api/settings");
 
+dotenv.config();
 const app = express();
+app.use(express.json());
 
-// Body Parser Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
-
-app.use("/api/v1/tasks", require("./routes/api/tasks"));
-app.use("/api/v1/settings", require("./routes/api/settings"));
+app.use(usersRouter);
+app.use(tasksRouter);
+app.use(settingsRouter);
 
 const PORT = process.env.PORT || 5000;
 
